@@ -24,8 +24,10 @@ class Calculator {
   }
 
   #extractDelimiters() {
-    const customDelimiter = this.#input.split('\\n')[0];
-    
+    // TODO: 여러 구분자 추출: 커스텀 구분자가 없을 때까지 반복
+    // TODO: 더 효율적인 방식이 있는지 찾아보기
+    const customDelimiter = this.#input.split('//')[1].split('\\n')[0];
+    this.#delimiter.push(customDelimiter);
   }
 
   #addNumbers() {
