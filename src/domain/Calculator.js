@@ -13,12 +13,19 @@ class Calculator {
   }
 
   calculate() {
+    this.#extractInputString();
     this.#extractDelimiters();
     this.#addNumbers();
   }
 
-  #extractDelimiters() {
+  #extractInputString() {
+    const splitInput = this.#input.split('\\n');
+    this.#parsedInput = splitInput[splitInput.length - 1];
+  }
 
+  #extractDelimiters() {
+    const customDelimiter = this.#input.split('\\n')[0];
+    
   }
 
   #addNumbers() {

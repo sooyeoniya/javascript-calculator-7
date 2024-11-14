@@ -5,7 +5,7 @@ import OutputView from '../view/OutputView.js';
 
 class Controller {
   async start() {
-    this.#validateInputAsync();
+    const input = await this.#validateInputAsync();
 
     const calculator = new Calculator(input);
     calculator.calculate();
