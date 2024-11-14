@@ -1,7 +1,7 @@
 class Calculator {
   #input = '';
   #output = 0;
-  #delimiter = [',', ':']; // TODO: 문자열로 정의
+  #delimiter = ',:';
   #parsedInput = '';
 
   constructor(input) {
@@ -29,16 +29,16 @@ class Calculator {
     if (!regex.test(this.#input)) return;
 
     const customDelimiters = this.#input.split('//')[1].split('\\n')[0];
-    for (const delimiter of customDelimiters) this.#delimiter.push(delimiter)
-    console.log(this.#delimiter);
+    this.#delimiter += customDelimiters;
+    // console.log(this.#delimiter);
   }
 
   #addNumbers() {
-    const regex = new RegExp(`[${this.#delimiter.join('')}]`)
+    const regex = new RegExp(`[${this.#delimiter}]`)
     const parsedNumbers = this.#parsedInput.split(regex);
-    console.log(parsedNumbers);
+    // console.log(parsedNumbers);
     this.#output = parsedNumbers.reduce((acc, cur) => acc + Number(cur), 0);
-    console.log(this.#output);
+    // console.log(this.#output);
   }
 }
 
