@@ -20,7 +20,7 @@ class Calculator {
   }
 
   #extractDelimiters() {
-
+    
   }
 
   #addNumbers() {
