@@ -17,27 +17,37 @@ const getLogSpy = () => {
 };
 
 describe('문자열 계산기', () => {
-  test('커스텀 구분자 사용', async () => {
-    const inputs = ['//;\\n1'];
+  it.each([
+    ['커스텀 구분자 사용', '//;\\n1', '1'],
+  ])('%s', async (_, input, output) => {
+    // given
+    const inputs = [input];
     mockQuestions(inputs);
 
     const logSpy = getLogSpy();
-    const outputs = ['결과 : 1'];
+    const outputs = [`결과 : ${output}`];
 
+    // when
     const app = new App();
     await app.run();
 
+    // then
     outputs.forEach((output) => {
       expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
     });
   });
 
-  test('예외 테스트', async () => {
-    const inputs = ['-1,2,3'];
+  it.each([
+    ['음수인 경우', '-1,2,3'],
+  ])('예외 테스트: %s', async (_, input) => {
+    // given
+    const inputs = [input];
     mockQuestions(inputs);
 
+    // when
     const app = new App();
 
+    // then
     await expect(app.run()).rejects.toThrow('[ERROR]');
   });
 });
