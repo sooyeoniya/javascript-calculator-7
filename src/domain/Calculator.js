@@ -30,15 +30,15 @@ class Calculator {
     if (!regex.test(this.#input)) return;
     const customDelimiter = this.#input.split('//')[1].split('\\n')[0];
     this.#delimiter.push(customDelimiter);
-    // console.log(this.#delimiter);
+    console.log(this.#delimiter);
   }
 
   #addNumbers() {
     const regex = new RegExp(`[${this.#delimiter}]`)
     const parsedNumbers = this.#parsedInput.split(regex);
-    // console.log(parsedNumbers);
+    console.log(parsedNumbers);
     this.#output = parsedNumbers.reduce((acc, cur) => acc + Number(cur), 0);
-    // console.log(this.#output);
+    console.log(this.#output);
   }
 }
 

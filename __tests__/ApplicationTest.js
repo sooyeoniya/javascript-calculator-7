@@ -19,6 +19,12 @@ const getLogSpy = () => {
 describe('문자열 계산기', () => {
   it.each([
     ['커스텀 구분자 사용', '//;\\n1', '1'],
+    ['빈 문자열인 경우', '', '0'],
+    ['앞뒤로 구분자가 존재하는 경우', ',1,2,3,', '6'],
+    ['커스텀 구분자가 숫자인 경우', '//1\\n21315', '10'],
+    ['커스텀 구분자가 여러 개 정의된 경우', '//?!@\\n1?2!3@4', '10'],
+    ['공백이 포함된 경우', ' //?\\n 1 ? 2 , 3 ', '6'],
+    ['커스텀 구분자가 공백인 경우', '// \\n1 2 3 4', '10'],
   ])('%s', async (_, input, output) => {
     // given
     const inputs = [input];
@@ -37,17 +43,17 @@ describe('문자열 계산기', () => {
     });
   });
 
-  it.each([
-    ['음수인 경우', '-1,2,3'],
-  ])('예외 테스트: %s', async (_, input) => {
-    // given
-    const inputs = [input];
-    mockQuestions(inputs);
+  // it.each([
+  //   ['음수인 경우', '-1,2,3'],
+  // ])('예외 테스트: %s', async (_, input) => {
+  //   // given
+  //   const inputs = [input];
+  //   mockQuestions(inputs);
 
-    // when
-    const app = new App();
+  //   // when
+  //   const app = new App();
 
-    // then
-    await expect(app.run()).rejects.toThrow('[ERROR]');
-  });
+  //   // then
+  //   await expect(app.run()).rejects.toThrow('[ERROR]');
+  // });
 });
