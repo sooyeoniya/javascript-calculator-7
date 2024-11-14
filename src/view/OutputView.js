@@ -6,7 +6,7 @@ const OutputView = {
   },
 
   printErrorMessage(errorMessage) {
-    Console.print(errorMessage);
+    throw new Error(`[ERROR] ${errorMessage}`);
   }
 }
 

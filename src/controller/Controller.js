@@ -5,24 +5,14 @@ import OutputView from '../view/OutputView.js';
 
 class Controller {
   async start() {
-    const input = await this.#validateInputAsync();
+    const input = await InputView.readStringAsync();
+    new Validator(input).validate();
 
     const calculator = new Calculator(input);
     calculator.calculate();
 
     const output = calculator.getResult();
     OutputView.printOutput(output);
-  }
-
-  async #validateInputAsync() {
-    try {
-      const input = await InputView.readStringAsync();
-      new Validator(input).validate();
-      return input;
-    } catch (error) {
-      OutputView.printErrorMessage(error.message);
-      this.#validateInputAsync();
-    }
   }
 }
 
