@@ -5,8 +5,12 @@ import OutputView from '../view/OutputView.js';
 class Controller {
   async start() {
     const input = await InputView.readString();
+
     const calculator = new Calculator(input);
-    OutputView.print(calculator.getAdditionResult());
+    calculator.calculate();
+
+    const output = calculator.getResult();
+    OutputView.print(output);
   }
 }
 

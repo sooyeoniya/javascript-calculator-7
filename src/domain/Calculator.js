@@ -10,12 +10,13 @@ class Calculator {
     this.#input = input;
   }
 
-  getAdditionResult() {
+  getResult() {
     return this.#output;
   }
 
-  #calculateNumbers() {
-
+  calculate() {
+    this.#extractDelimiters();
+    this.#addNumbers();
   }
 
   #extractDelimiters() {
@@ -23,7 +24,7 @@ class Calculator {
   }
 
   #addNumbers() {
-    // 
+    
   }
 }
 
