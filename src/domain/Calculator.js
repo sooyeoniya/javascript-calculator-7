@@ -1,7 +1,7 @@
 class Calculator {
   #input = '';
   #output = 0;
-  #delimiter = [',', ':'];
+  #delimiter = [',', ':']; // TODO: 문자열로 정의
   #parsedInput = '';
 
   constructor(input) {
@@ -24,17 +24,17 @@ class Calculator {
   }
 
   #extractDelimiters() {
-    // TODO: customDelimiter 각각 따로 저장
     // TODO: 더 효율적인 방식이 있는지 찾아보기
     const regex = new RegExp('[//\\n]', 'g');
     if (!regex.test(this.#input)) return;
-    const customDelimiter = this.#input.split('//')[1].split('\\n')[0];
-    this.#delimiter.push(customDelimiter);
+
+    const customDelimiters = this.#input.split('//')[1].split('\\n')[0];
+    for (const delimiter of customDelimiters) this.#delimiter.push(delimiter)
     console.log(this.#delimiter);
   }
 
   #addNumbers() {
-    const regex = new RegExp(`[${this.#delimiter}]`)
+    const regex = new RegExp(`[${this.#delimiter.join('')}]`)
     const parsedNumbers = this.#parsedInput.split(regex);
     console.log(parsedNumbers);
     this.#output = parsedNumbers.reduce((acc, cur) => acc + Number(cur), 0);
