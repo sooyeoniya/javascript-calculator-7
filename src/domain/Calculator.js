@@ -26,7 +26,8 @@ class Calculator {
   #extractDelimiters() {
     // TODO: customDelimiter 각각 따로 저장
     // TODO: 더 효율적인 방식이 있는지 찾아보기
-    // FIXME: 구분자가 있는 경우만 처리하도록 수정
+    const regex = new RegExp('[//\\n]', 'g');
+    if (!regex.test(this.#input)) return;
     const customDelimiter = this.#input.split('//')[1].split('\\n')[0];
     this.#delimiter.push(customDelimiter);
     // console.log(this.#delimiter);
