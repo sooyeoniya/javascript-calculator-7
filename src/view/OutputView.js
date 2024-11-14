@@ -1,8 +1,12 @@
 import { Console } from '@woowacourse/mission-utils';
 
 const OutputView = {
-  print(output) {
+  printOutput(output) {
     Console.print(`결과 : ${output}`);
+  },
+
+  printErrorMessage(errorMessage) {
+    Console.print(errorMessage);
   }
 }
 

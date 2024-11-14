@@ -1,12 +1,10 @@
-import validator from '../utils/validator.js';
-
 class Calculator {
   #input = '';
   #output = 0;
   #delimiter = [',', ':'];
+  #parsedInput = '';
 
   constructor(input) {
-    validator(input);
     this.#input = input;
   }
 
@@ -20,7 +18,7 @@ class Calculator {
   }
 
   #extractDelimiters() {
-    
+
   }
 
   #addNumbers() {
