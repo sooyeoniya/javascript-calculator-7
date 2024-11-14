@@ -6,9 +6,10 @@ import OutputView from '../view/OutputView.js';
 class Controller {
   async start() {
     const input = await InputView.readStringAsync();
-    new Validator(input).validate();
+    const parsedInput = input.trim();
 
-    const calculator = new Calculator(input);
+    new Validator(parsedInput).validate();
+    const calculator = new Calculator(parsedInput);
     calculator.calculate();
 
     const output = calculator.getResult();
