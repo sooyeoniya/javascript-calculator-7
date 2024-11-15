@@ -1,9 +1,10 @@
 import { Console } from '@woowacourse/mission-utils';
+import { INPUT_PROMPT } from '../constants/constants.js';
 
 const InputView = {
   readStringAsync() {
     try {
-      const input = Console.readLineAsync('덧셈할 문자열을 입력해 주세요.\n');
+      const input = Console.readLineAsync(INPUT_PROMPT);
       return input;
     } catch (error) {
       Console.print(error.message);

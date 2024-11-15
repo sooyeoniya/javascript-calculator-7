@@ -1,3 +1,6 @@
+export const INPUT_PROMPT = '덧셈할 문자열을 입력해 주세요.\n';
+export const ERROR_PREFIX = '[ERROR]';
+export const OUTPUT_PREFIX = '결과 :';
 export const NEGATIVE_NUM = '-';
 export const INPUT_REGEX = /^(\/\/(?<customDelimiters>.*)\\n)?(?<expression>.*)$/;
 

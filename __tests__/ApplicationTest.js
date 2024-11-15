@@ -1,5 +1,6 @@
 import App from '../src/App.js';
 import { MissionUtils } from '@woowacourse/mission-utils';
+import { ERROR_PREFIX, ERROR_MESSAGES } from '../src/constants/constants.js';
 
 const mockQuestions = (inputs) => {
   MissionUtils.Console.readLineAsync = jest.fn();
@@ -58,17 +59,17 @@ describe('문자열 계산기', () => {
   });
 
   it.each([
-    ['커스텀 구분자에 아무것도 존재하지 않는 경우', '//\\n1,2:3'],
-    ['음수인 경우 (1)', '-1,2,3'],
-    ['음수인 경우 (2)', '1,-2,3'],
-    ['입력 형식이 맞지 않는 경우 (1)', '1//?\\n3,4,5'],
-    ['입력 형식이 맞지 않는 경우 (2)', '1:3,4,5//?\\n'],
-    ['입력 형식이 맞지 않는 경우 (3)', '//?2,3,4'],
-    ['입력 형식이 맞지 않는 경우 (4)', '12\\n3,4,5'],
-    ['정의하지 않은 구분자가 있는 경우 (1)', '//!\\n1,2?5'],
-    ['정의하지 않은 구분자가 있는 경우 (2)', '1,2!3:4'],
-    ['정의하지 않은 구분자가 있는 경우 (3)', '//?\\n1?2,3 4 5'],
-  ])('예외 테스트: %s', async (_, input) => {
+    ['커스텀 구분자에 아무것도 존재하지 않는 경우', '//\\n1,2:3', ERROR_MESSAGES.NO_CUSTOM_DELIMITERS],
+    ['음수인 경우 (1)', '-1,2,3', ERROR_MESSAGES.NEGATIVE_NUM],
+    ['음수인 경우 (2)', '1,-2,3', ERROR_MESSAGES.NEGATIVE_NUM],
+    ['입력 형식이 맞지 않는 경우 (1)', '1//?\\n3,4,5', ERROR_MESSAGES.INPUT_FORM],
+    ['입력 형식이 맞지 않는 경우 (2)', '1:3,4,5//?\\n', ERROR_MESSAGES.INPUT_FORM],
+    ['입력 형식이 맞지 않는 경우 (3)', '//?2,3,4', ERROR_MESSAGES.INPUT_FORM],
+    ['입력 형식이 맞지 않는 경우 (4)', '12\\n3,4,5', ERROR_MESSAGES.INPUT_FORM],
+    ['정의하지 않은 구분자가 있는 경우 (1)', '//!\\n1,2?5', ERROR_MESSAGES.NO_DEFINITION_DELIMITERS],
+    ['정의하지 않은 구분자가 있는 경우 (2)', '1,2!3:4', ERROR_MESSAGES.NO_DEFINITION_DELIMITERS],
+    ['정의하지 않은 구분자가 있는 경우 (3)', '//?\\n1?2,3 4 5', ERROR_MESSAGES.NO_DEFINITION_DELIMITERS],
+  ])('예외 테스트: %s', async (_, input, errorMessage) => {
     // given
     const inputs = [input];
     mockQuestions(inputs);
@@ -77,6 +78,6 @@ describe('문자열 계산기', () => {
     const app = new App();
 
     // then
-    await expect(app.run()).rejects.toThrow('[ERROR]');
+    await expect(app.run()).rejects.toThrow(`${ERROR_PREFIX} ${errorMessage}`);
   });
 });
