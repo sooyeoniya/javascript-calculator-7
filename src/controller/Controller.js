@@ -8,8 +8,8 @@ class Controller {
     const parsedInput = input.trim();
 
     const calculator = new Calculator(parsedInput);
-    // const result = calculator.calculate();
-    // OutputView.printOutput(result);
+    const result = calculator.calculate();
+    OutputView.printOutput(result);
   }
 }
 

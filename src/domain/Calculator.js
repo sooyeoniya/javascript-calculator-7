@@ -1,66 +1,59 @@
 import OutputView from '../view/OutputView.js';
-import { CUSTOM_DELIMITERS, ERROR_MESSAGES } from '../constants/constants.js';
+import { CUSTOM_DELIMITERS, ERROR_MESSAGES, NEGATIVE_NUM } from '../constants/constants.js';
 
 const INPUT_REGEX = /^(\/\/(?<customDelimiters>.*)\\n)?(?<expression>.*)$/;
 
 class Calculator {
+  #input = '';
   #delimiter = ',:';
   #customDelimiters;
   #expression;
 
   constructor(input) {
-    this.#extractCustomDelimitersAndExpression(input);
-    this.#validation(input);
+    this.#input = input;
   }
 
-  #extractCustomDelimitersAndExpression(input) {
-    const { customDelimiters, expression } = input.match(INPUT_REGEX).groups;
+  calculate() {
+    const { customDelimiters, expression } = this.#input.match(INPUT_REGEX).groups;
     this.#customDelimiters = customDelimiters;
+    if (this.#customDelimiters) this.#delimiter += customDelimiters;
     this.#expression = expression;
-    console.log(this.#customDelimiters, this.#expression);
+    // console.log(this.#customDelimiters, this.#delimiter, this.#expression);
+
+    const regex = new RegExp(`[${this.#delimiter}]`)
+    const parsedNumbers = this.#expression.split(regex).map(number => number.trim());
+    // console.log(parsedNumbers);
+
+    this.#validation(parsedNumbers);
+    return this.#sumNumbers(parsedNumbers);
   }
 
-  #validation(input) {
+  #validation(parsedNumbers) {
     if (!this.#customDelimiters 
       && (this.#expression.includes(CUSTOM_DELIMITERS.START) 
       || this.#expression.includes(CUSTOM_DELIMITERS.END))) {
       OutputView.printErrorMessage(ERROR_MESSAGES.INPUT_FORM);
     }
-    if (!this.#customDelimiters && input.startsWith(CUSTOM_DELIMITERS.START)) {
+
+    if (!this.#customDelimiters && this.#input.startsWith(CUSTOM_DELIMITERS.START)) {
       OutputView.printErrorMessage(ERROR_MESSAGES.NO_CUSTOM_DELIMITERS);
+    }
+
+    if (this.#expression.includes(NEGATIVE_NUM)
+      && (!this.#customDelimiters
+      || (this.#customDelimiters && !this.#customDelimiters.includes(NEGATIVE_NUM)))
+    ) {
+      OutputView.printErrorMessage(ERROR_MESSAGES.NEGATIVE_NUM);
+    }
+
+    if (parsedNumbers.some((delimiter) => isNaN(Number(delimiter)))) {
+      OutputView.printErrorMessage(ERROR_MESSAGES.NO_DEFINITION_DELIMITERS);
     }
   }
 
-  // calculate() {
-  //   if (this.#input.startsWith(CUSTOM_DELIMITERS.START)) {
-  //     this.#extractInputString();
-  //     this.#extractDelimiters();
-  //   }
-  //   return this.#addNumbers();
-  // }
-
-  // #extractInputString() {
-  //   const splitInput = this.#input.split(CUSTOM_DELIMITERS.END);
-  //   this.#parsedInput = splitInput[splitInput.length - 1];
-  //   console.log('this.#parsedInput: ' + this.#parsedInput);
-  // }
-
-  // #extractDelimiters() {
-  //   const customDelimiters = this.#input.split(CUSTOM_DELIMITERS.START)[1].split(CUSTOM_DELIMITERS.END)[0];
-  //   console.log('customDelimiters: ' + customDelimiters);
-  //   this.#delimiter += customDelimiters;
-  //   console.log('this.#delimiter: ' + this.#delimiter);
-  // }
-
-  // #addNumbers() {
-  //   const regex = new RegExp(`[${this.#delimiter}]`)
-  //   const parsedNumbers = this.#parsedInput.split(regex).map(number => number.trim());
-  //   console.log('parsedNumbers');
-  //   console.log(parsedNumbers);
-  //   const result = parsedNumbers.reduce((acc, cur) => acc + Number(cur), 0);
-  //   console.log('result: ' + result);
-  //   return result;
-  // }
+  #sumNumbers(parsedNumbers) {
+    return parsedNumbers.reduce((acc, cur) => acc + Number(cur), 0);
+  }
 }
 
 export default Calculator;
