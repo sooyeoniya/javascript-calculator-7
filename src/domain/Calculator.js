@@ -17,7 +17,8 @@ class Calculator {
     if (this.#customDelimiters) {
       customDelimiters.split('').forEach((delimiter) => {
         if (!this.#delimiter.has(delimiter)) {
-          this.#delimiter.add(delimiter)
+          const escapedDelimiter = this.#escapeRegExp(delimiter);
+          this.#delimiter.add(escapedDelimiter)
         }
       });
     }
@@ -53,6 +54,10 @@ class Calculator {
     if (parsedNumbers.some((delimiter) => isNaN(Number(delimiter)))) {
       OutputView.printErrorMessage(ERROR_MESSAGES.NO_DEFINITION_DELIMITERS);
     }
+  }
+
+  #escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
   #sumNumbers(parsedNumbers) {
