@@ -5,7 +5,7 @@ const INPUT_REGEX = /^(\/\/(?<customDelimiters>.*)\\n)?(?<expression>.*)$/;
 
 class Calculator {
   #input = '';
-  #delimiter = ',:';
+  #delimiter = new Set([',', ':']);
   #customDelimiters;
   #expression;
 
@@ -16,11 +16,17 @@ class Calculator {
   calculate() {
     const { customDelimiters, expression } = this.#input.match(INPUT_REGEX).groups;
     this.#customDelimiters = customDelimiters;
-    if (this.#customDelimiters) this.#delimiter += customDelimiters;
+    if (this.#customDelimiters) {
+      customDelimiters.split('').forEach((delimiter) => {
+        if (!this.#delimiter.has(delimiter)) {
+          this.#delimiter.add(delimiter)
+        }
+      });
+    }
     this.#expression = expression;
     // console.log(this.#customDelimiters, this.#delimiter, this.#expression);
 
-    const regex = new RegExp(`[${this.#delimiter}]`)
+    const regex = new RegExp(`[${Array.from(this.#delimiter).join('')}]`)
     const parsedNumbers = this.#expression.split(regex).map(number => number.trim());
     // console.log(parsedNumbers);
 
