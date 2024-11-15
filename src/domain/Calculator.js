@@ -1,3 +1,5 @@
+import OutputView from '../view/OutputView.js';
+
 class Calculator {
   #input = '';
   #output = 0;
@@ -11,6 +13,10 @@ class Calculator {
 
   getResult() {
     return this.#output;
+  }
+
+  validate() {
+    this.#validateStringFormat();
   }
 
   calculate() {
@@ -41,6 +47,13 @@ class Calculator {
     console.log(parsedNumbers);
     this.#output = parsedNumbers.reduce((acc, cur) => acc + Number(cur), 0);
     console.log('this.#output: ' + this.#output);
+  }
+
+  #validateStringFormat() {
+    const regex = /^(\/\/(?<customDelimiters>)\\n)?(?<expression>.*)$/;
+    if (!regex.test(this.#input)) {
+      OutputView.printErrorMessage('올바르지 않은 형식으로 입력했습니다. 다시 입력해주세요.');
+    }
   }
 }
 
