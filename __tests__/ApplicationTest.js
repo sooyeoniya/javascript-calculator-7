@@ -1,6 +1,6 @@
 import App from '../src/App.js';
 import { MissionUtils } from '@woowacourse/mission-utils';
-import { ERROR_PREFIX, ERROR_MESSAGES } from '../src/constants/constants.js';
+import { OUTPUT_PREFIX, ERROR_PREFIX, ERROR_MESSAGES } from '../src/constants/constants.js';
 
 const mockQuestions = (inputs) => {
   MissionUtils.Console.readLineAsync = jest.fn();
@@ -46,7 +46,7 @@ describe('문자열 계산기', () => {
     mockQuestions(inputs);
 
     const logSpy = getLogSpy();
-    const outputs = [`결과 : ${output}`];
+    const outputs = [`${OUTPUT_PREFIX} ${output}`];
 
     // when
     const app = new App();

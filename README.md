@@ -45,11 +45,36 @@
   - [x] 통합 테스트
     - 기능 및 예외 테스트
 
-  - 단위 테스트
-    - [ ] `parser` 함수 테스트
+  - [ ] 단위 테스트
+    - [x] `parser` 함수 테스트
     - [ ] `validation` 함수 테스트
     - [ ] `Calculator` 클래스 테스트
 
 ### 기타
   
   - [ ] `JSDoc` 사용하여 주석 달기
+
+## 🏛️ 프로젝트 구조
+```
+__tests__
+├── ApplicationTest.js
+├── ParserTest.js
+├── ValidationTest.js
+└── CalculatorTest.js
+
+src
+├── App.js
+├── index.js
+├── constants
+│   └── constants.js
+├── controller
+│   └── Controller.js
+├── domain
+│   └── Calculator.js
+├── utils
+│   ├── parser.js
+│   └── validation.js
+└── view
+    ├── InputView.js
+    └── OutputView.js
+```
