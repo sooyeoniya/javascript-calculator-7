@@ -2,17 +2,12 @@ import OutputView from '../view/OutputView.js';
 
 class Calculator {
   #input = '';
-  #output = 0;
   #delimiter = ',:';
   #parsedInput = '';
 
   constructor(input) {
     this.#input = input;
     this.#parsedInput = input;
-  }
-
-  getResult() {
-    return this.#output;
   }
 
   validate() {
@@ -24,7 +19,7 @@ class Calculator {
       this.#extractInputString();
       this.#extractDelimiters();
     }
-    this.#addNumbers();
+    return this.#addNumbers();
   }
 
   #extractInputString() {
@@ -45,8 +40,9 @@ class Calculator {
     const parsedNumbers = this.#parsedInput.split(regex).map(number => number.trim());
     console.log('parsedNumbers');
     console.log(parsedNumbers);
-    this.#output = parsedNumbers.reduce((acc, cur) => acc + Number(cur), 0);
-    console.log('this.#output: ' + this.#output);
+    const result = parsedNumbers.reduce((acc, cur) => acc + Number(cur), 0);
+    console.log('result: ' + result);
+    return result;
   }
 
   #validateStringFormat() {

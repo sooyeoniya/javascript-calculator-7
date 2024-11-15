@@ -9,10 +9,9 @@ class Controller {
 
     const calculator = new Calculator(parsedInput);
     calculator.validate();
-    calculator.calculate();
 
-    const output = calculator.getResult();
-    OutputView.printOutput(output);
+    const result = calculator.calculate();
+    OutputView.printOutput(result);
   }
 }
 
