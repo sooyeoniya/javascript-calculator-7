@@ -1,4 +1,5 @@
 import OutputView from '../view/OutputView.js';
+import { CUSTOM_DELIMITERS, ERROR_MESSAGES } from '../constants/constants.js';
 
 const INPUT_REGEX = /^(\/\/(?<customDelimiters>.*)\\n)?(?<expression>.*)$/;
 
@@ -20,16 +21,18 @@ class Calculator {
   }
 
   #validation(input) {
-    if (!this.#customDelimiters && (this.#expression.includes('//') || this.#expression.includes('\\n'))) {
-      OutputView.printErrorMessage('입력 형식이 올바르지 않습니다. 다시 입력해주세요.');
+    if (!this.#customDelimiters 
+      && (this.#expression.includes(CUSTOM_DELIMITERS.START) 
+      || this.#expression.includes(CUSTOM_DELIMITERS.END))) {
+      OutputView.printErrorMessage(ERROR_MESSAGES.INPUT_FORM);
     }
-    if (!this.#customDelimiters && input.startsWith('//')) {
-      OutputView.printErrorMessage('커스텀 구분자가 존재하지 않습니다. 다시 입력해주세요.');
+    if (!this.#customDelimiters && input.startsWith(CUSTOM_DELIMITERS.START)) {
+      OutputView.printErrorMessage(ERROR_MESSAGES.NO_CUSTOM_DELIMITERS);
     }
   }
 
   // calculate() {
-  //   if (this.#input.startsWith('//')) {
+  //   if (this.#input.startsWith(CUSTOM_DELIMITERS.START)) {
   //     this.#extractInputString();
   //     this.#extractDelimiters();
   //   }
@@ -37,13 +40,13 @@ class Calculator {
   // }
 
   // #extractInputString() {
-  //   const splitInput = this.#input.split('\\n');
+  //   const splitInput = this.#input.split(CUSTOM_DELIMITERS.END);
   //   this.#parsedInput = splitInput[splitInput.length - 1];
   //   console.log('this.#parsedInput: ' + this.#parsedInput);
   // }
 
   // #extractDelimiters() {
-  //   const customDelimiters = this.#input.split('//')[1].split('\\n')[0];
+  //   const customDelimiters = this.#input.split(CUSTOM_DELIMITERS.START)[1].split(CUSTOM_DELIMITERS.END)[0];
   //   console.log('customDelimiters: ' + customDelimiters);
   //   this.#delimiter += customDelimiters;
   //   console.log('this.#delimiter: ' + this.#delimiter);
