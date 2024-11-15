@@ -8,8 +8,8 @@ class Controller {
     const input = await InputView.readStringAsync();
     const parsedInput = parser.removeTheSpace(input);
 
-    const calculator = new Calculator(parsedInput);
-    const result = calculator.calculate();
+    const calculator = new Calculator();
+    const result = calculator.calculate(parsedInput);
     OutputView.printOutput(result);
   }
 }
