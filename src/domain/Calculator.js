@@ -15,23 +15,25 @@ class Calculator {
   calculate() {
     const { customDelimiters, expression } = this.#input.match(INPUT_REGEX).groups;
     this.#customDelimiters = customDelimiters;
-    if (this.#customDelimiters) {
-      customDelimiters.split('').forEach((delimiter) => {
-        if (!this.#delimiter.has(delimiter)) {
-          const escapedDelimiter = parser.escapeRegExp(delimiter);
-          this.#delimiter.add(escapedDelimiter)
-        }
-      });
-    }
     this.#expression = expression;
-    // console.log(this.#customDelimiters, this.#delimiter, this.#expression);
-
-    const regex = new RegExp(`[${Array.from(this.#delimiter).join('')}]`)
-    const parsedNumbers = this.#expression.split(regex).map(number => parser.removeTheSpace(number));
-    // console.log(parsedNumbers);
-
+    if (this.#customDelimiters) {
+      this.#customDelimiters.split('').forEach((delimiter) => this.#addCustomDelimiters(delimiter));
+    }
+    const parsedNumbers = this.#extractNumbers();
     this.#validation(parsedNumbers);
     return parser.sumNumbers(parsedNumbers);
+  }
+
+  #addCustomDelimiters(delimiter) {
+    if (!this.#delimiter.has(delimiter)) {
+      const escapedDelimiter = parser.escapeRegExp(delimiter);
+      this.#delimiter.add(escapedDelimiter)
+    }
+  }
+
+  #extractNumbers() {
+    const regex = new RegExp(`[${Array.from(this.#delimiter).join('')}]`)
+    return this.#expression.split(regex).map(number => parser.removeTheSpace(number));
   }
 
   #validation(parsedNumbers) {
