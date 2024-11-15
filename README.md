@@ -48,7 +48,7 @@
   - [x] 단위 테스트
     - [x] `parser` 함수 테스트
     - [x] `validation` 함수 테스트
-    - [ ] `Calculator` 클래스 테스트
+    - [x] `Calculator` 클래스 테스트
 
 ### 기타
   
