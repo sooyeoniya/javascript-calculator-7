@@ -1,5 +1,6 @@
 import OutputView from '../view/OutputView.js';
 import { CUSTOM_DELIMITERS, ERROR_MESSAGES, NEGATIVE_NUM, INPUT_REGEX } from '../constants/constants.js';
+import parser from '../utils/parser.js';
 
 class Calculator {
   #input = '';
@@ -17,7 +18,7 @@ class Calculator {
     if (this.#customDelimiters) {
       customDelimiters.split('').forEach((delimiter) => {
         if (!this.#delimiter.has(delimiter)) {
-          const escapedDelimiter = this.#escapeRegExp(delimiter);
+          const escapedDelimiter = parser.escapeRegExp(delimiter);
           this.#delimiter.add(escapedDelimiter)
         }
       });
@@ -26,11 +27,11 @@ class Calculator {
     // console.log(this.#customDelimiters, this.#delimiter, this.#expression);
 
     const regex = new RegExp(`[${Array.from(this.#delimiter).join('')}]`)
-    const parsedNumbers = this.#expression.split(regex).map(number => number.trim());
+    const parsedNumbers = this.#expression.split(regex).map(number => parser.removeTheSpace(number));
     // console.log(parsedNumbers);
 
     this.#validation(parsedNumbers);
-    return this.#sumNumbers(parsedNumbers);
+    return parser.sumNumbers(parsedNumbers);
   }
 
   #validation(parsedNumbers) {
@@ -54,14 +55,6 @@ class Calculator {
     if (parsedNumbers.some((delimiter) => isNaN(Number(delimiter)))) {
       OutputView.printErrorMessage(ERROR_MESSAGES.NO_DEFINITION_DELIMITERS);
     }
-  }
-
-  #escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
-
-  #sumNumbers(parsedNumbers) {
-    return parsedNumbers.reduce((acc, cur) => acc + Number(cur), 0);
   }
 }
 
