@@ -1,7 +1,5 @@
 import OutputView from '../view/OutputView.js';
-import { CUSTOM_DELIMITERS, ERROR_MESSAGES, NEGATIVE_NUM } from '../constants/constants.js';
-
-const INPUT_REGEX = /^(\/\/(?<customDelimiters>.*)\\n)?(?<expression>.*)$/;
+import { CUSTOM_DELIMITERS, ERROR_MESSAGES, NEGATIVE_NUM, INPUT_REGEX } from '../constants/constants.js';
 
 class Calculator {
   #input = '';

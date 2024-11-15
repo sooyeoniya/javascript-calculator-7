@@ -1,4 +1,5 @@
 export const NEGATIVE_NUM = '-';
+export const INPUT_REGEX = /^(\/\/(?<customDelimiters>.*)\\n)?(?<expression>.*)$/;
 
 export const CUSTOM_DELIMITERS = Object.freeze({
   START: '//',
